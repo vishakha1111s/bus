@@ -16,7 +16,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
         try {
           NewsModel newsModel = await _getNews.call();
           if (newsModel != null)
-            emit(NewsLoadCompleteState());
+            emit(NewsLoadCompleteState(newsModel: newsModel));
           else
             emit(NewsErrorState(error: "Something Went Wrong"));
         } catch (e) {

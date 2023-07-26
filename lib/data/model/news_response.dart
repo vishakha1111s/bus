@@ -81,7 +81,7 @@ class Article {
 }
 
 class Source {
-  int? id;
+  String? id;
   String? name;
 
   Source({

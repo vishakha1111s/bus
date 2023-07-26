@@ -8,13 +8,12 @@ class NewsRepositoryImpl extends NewsRepository {
   Future<entity.NewsModel> fetchNews() async {
     NewsResponse newsResponse = await GetNewsDataSource().getNews();
 
-    int? id;
     String? name, url, description, author, title;
-    String? urlToImage, publishedAt, content;
+    String? urlToImage, publishedAt, content, id;
     List<entity.Article> article = [];
 
     for (int i = 0; i < (newsResponse.articles?.length ?? 0); i++) {
-      id = newsResponse.articles?[i].source?.id ?? 0;
+      id = newsResponse.articles?[i].source?.id ?? "";
       name = newsResponse.articles?[i]?.source?.name ?? "";
       author = newsResponse.articles?[i].author ?? "";
       title = newsResponse.articles?[i].title ?? "";

@@ -5,14 +5,16 @@ import 'package:untitled2/domain/entities/news_model.dart';
 import 'package:untitled2/utils/core.dart';
 import 'package:untitled2/utils/repo_response.dart';
 
-
 class GetNewsDataSource {
   var errorStr = "Something Went Wrong";
 
   Future<NewsResponse> getNews() async {
     try {
-      var response = await CoreApplication().dio.get(
-          "/v2/everything", queryParameters: {"q":"bitcoin"});
+      var response = await CoreApplication().dio.get("/v2/everything",
+          queryParameters: {
+            "q": "bitcoin",
+            "apiKey": "11d4cd5e95b54423901d72b8167fe73a"
+          });
       return NewsResponse.fromJson(response.data);
     } on Exception catch (e) {
       AppLogger.log("News - Dio Error: $e");

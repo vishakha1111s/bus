@@ -2,9 +2,16 @@
 
 
 import 'package:equatable/equatable.dart';
+import 'package:untitled2/domain/entities/news_model.dart';
 
 abstract class NewsState extends Equatable {
 
+}
+
+class InitialState extends NewsState {
+
+  @override
+  List<Object?> get props => [];
 }
 
 class NewsLoadingState extends NewsState {
@@ -13,7 +20,9 @@ class NewsLoadingState extends NewsState {
 }
 
 class NewsLoadCompleteState extends NewsState {
-  NewsLoadCompleteState();
+
+  NewsModel? newsModel;
+  NewsLoadCompleteState({this.newsModel});
   @override
   List<Object?> get props => [];
 }

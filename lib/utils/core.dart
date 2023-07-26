@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:dio/adapter.dart';
 import 'package:flutter/services.dart';
@@ -55,32 +56,31 @@ class CoreApplication {
       ((X509Certificate cert, String host, int port) => true);
       return dioClient;
     };
+  }
 
-    const int _maxCharactersPerLine = 200;
-    //Print the string wrapped
-    void printWrapped(String value) {
-      if (value.length > _maxCharactersPerLine) {
-        int iterations = (value.length / _maxCharactersPerLine).floor();
-        for (int i = 0; i <= iterations; i++) {
-          int endingIndex = i * _maxCharactersPerLine + _maxCharactersPerLine;
-          if (endingIndex > value.length) {
-            endingIndex = value.length;
-          }
-          AppLogger.log(value.substring(i * _maxCharactersPerLine, endingIndex),
-              tag: "API logger");
+  static const int _maxCharactersPerLine = 200;
+
+  //Print the string wrapped
+  void printWrapped(String value) {
+    if (value.length > _maxCharactersPerLine) {
+      int iterations = (value.length / _maxCharactersPerLine).floor();
+      for (int i = 0; i <= iterations; i++) {
+        int endingIndex = i * _maxCharactersPerLine + _maxCharactersPerLine;
+        if (endingIndex > value.length) {
+          endingIndex = value.length;
         }
-      } else {
-        AppLogger.log(value, tag: "API logger");
+        AppLogger.log(value.substring(i * _maxCharactersPerLine, endingIndex),
+            tag: "API logger");
       }
-    }
-
-    resetDioTimeouts() {
-      dio.options.sendTimeout = sendTimeout;
-      dio.options.connectTimeout = connectTimeout;
+    } else {
+      AppLogger.log(value, tag: "API logger");
     }
   }
 
-
+  resetDioTimeouts() {
+    dio.options.sendTimeout = sendTimeout;
+    dio.options.connectTimeout = connectTimeout;
+  }
 }
 class AppInterceptors extends InterceptorsWrapper {
   @override
@@ -92,10 +92,11 @@ class AppInterceptors extends InterceptorsWrapper {
         tag: "API logger");
     AppLogger.log("<===========================================>",
         tag: "API logger");
-    if (!options.headers.containsKey("Authorization")) {
+    if (!options.headers.containsKey("apiKey")) {
       options.headers["apiKey"] =
           "11d4cd5e95b54423901d72b8167fe73a";
     }
+    printWrapped(toCurlCmd(options), "API logger");
     handler.next(options);
   }
 
@@ -137,3 +138,65 @@ class AppInterceptors extends InterceptorsWrapper {
 }
 
 
+
+
+String toCurlCmd(RequestOptions req) {
+  String cmd = "curl";
+
+  String header = req.headers
+      .map((key, value) {
+    if (key == "content-type" &&
+        value.toString().contains("multipart/form-data")) {
+      value = "multipart/form-data;";
+    }
+    return MapEntry(key, "-H '$key: $value'");
+  })
+      .values
+      .join(" ");
+  String url = "${req.baseUrl}${req.path}";
+  if (req.queryParameters.isNotEmpty) {
+    String query = req.queryParameters
+        .map((key, value) {
+      return MapEntry(key, "$key=$value");
+    })
+        .values
+        .join("&");
+
+    url += (url.contains("?")) ? query : "?$query";
+  }
+  if (req.method == "GET") {
+    cmd += " $header '$url'";
+  } else {
+    Map<String, dynamic> files = {};
+    String postData = "-d ''";
+    if (req.data != null) {
+      if (req.data is FormData) {
+        FormData fdata = req.data as FormData;
+        for (var element in fdata.files) {
+          MultipartFile file = element.value;
+          files[element.key] = "@${file.filename}";
+        }
+        for (var element in fdata.fields) {
+          files[element.key] = element.value;
+        }
+        if (files.isNotEmpty) {
+          postData = files
+              .map((key, value) => MapEntry(key, "-F '$key=$value'"))
+              .values
+              .join(" ");
+        }
+      } else if (req.data is Map<String, dynamic>) {
+        files.addAll(req.data);
+
+        if (files.isNotEmpty) {
+          postData = "-d '${jsonEncode(files).toString()}'";
+        }
+      }
+    }
+
+    String method = req.method.toString();
+    cmd += " -X $method $postData $header '$url'";
+  }
+
+  return cmd;
+}
