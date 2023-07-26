@@ -13,52 +13,57 @@ Widget NewsDescriptionPage(Article? article, BuildContext context) {
         //replace with our own icon data.
       ),
     ),
-    body: Center(
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10))),
-        margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        child: SingleChildScrollView(
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                NewsDetail(article?.title ?? "", 24, FontWeight.w800),
-                Image.network(article?.urlToImage ?? ""),
-                NewsDetail(article?.description ?? "", 18, FontWeight.w300),
-                NewsDetail("${article?.content ?? ""}", 20, FontWeight.w400),
-                Center(
-                    child: NewsDetail("Source ${article?.source?.name ?? ""}",
-                        20, FontWeight.w700)),
-                Center(
-                    child: NewsDetail("Id is ${article?.source?.id ?? ""}", 20,
-                        FontWeight.w700)),
-                Center(
-                    child: NewsDetail(
-                        "Author of the News - ${article?.author ?? ""}",
-                        16,
-                        FontWeight.w400)),
-                Center(
-                    child: NewsDetail(
-                        "PublishedAt ${article?.publishedAt ?? ""}",
-                        14,
-                        FontWeight.w500)),
-              ]),
+    body: Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: Center(
+        child: Card(
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          child: SingleChildScrollView(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  NewsDetail(article?.title ?? "",
+                      Theme.of(context).textTheme.headline1, context),
+                  Image.network(article?.urlToImage ?? ""),
+                  NewsDetail(article?.description ?? "",
+                      Theme.of(context).textTheme.headline6, context),
+                  NewsDetail("${article?.content ?? ""}",
+                      Theme.of(context).textTheme.headline6, context),
+                  Center(
+                      child: NewsDetail("Source ${article?.source?.name ?? ""}",
+                          Theme.of(context).textTheme.bodyText2, context)),
+                  Center(
+                      child: NewsDetail("Id is ${article?.source?.id ?? ""}",
+                          Theme.of(context).textTheme.bodyText2, context)),
+                  Center(
+                      child: NewsDetail(
+                          "Author of the News - ${article?.author ?? ""}",
+                          Theme.of(context).textTheme.bodyText2,
+                          context)),
+                  Center(
+                      child: NewsDetail(
+                          "PublishedAt ${article?.publishedAt ?? ""}",
+                          Theme.of(context).textTheme.bodyText2,
+                          context)),
+                ]),
+          ),
         ),
       ),
     ),
   );
 }
 
-Widget NewsDetail(String text, double fontSize, FontWeight fontWeight) {
+Widget NewsDetail(String text, TextStyle? textStyle, BuildContext context) {
   return Padding(
     padding: EdgeInsets.all(8.0),
     child: Container(
         child: Text(
       text,
-      style: TextStyle(
-          color: Colors.black87, fontSize: fontSize, fontWeight: fontWeight),
+      style: textStyle,
     )),
   );
 }
