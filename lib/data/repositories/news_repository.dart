@@ -1,4 +1,4 @@
-import 'package:untitled2/data/datasource/news_api_provider.dart';
+import 'package:untitled2/data/datasource/news_remote_storage_api_provider.dart';
 import 'package:untitled2/data/model/news_response.dart';
 import 'package:untitled2/domain/entities/news_model.dart' as entity;
 import 'package:untitled2/domain/repositories/news_repository.dart';

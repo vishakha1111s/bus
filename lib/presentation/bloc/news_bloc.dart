@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:untitled2/data/repositories/news_repository.dart';
 import 'package:untitled2/domain/entities/news_model.dart';
 import 'package:untitled2/domain/usecases/get_news.dart';
 import 'package:untitled2/presentation/bloc/news_event.dart';

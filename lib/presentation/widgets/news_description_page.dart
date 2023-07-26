@@ -21,7 +21,8 @@ Widget NewsDescriptionPage(Article? article, BuildContext context) {
           elevation: padding_4,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
-          margin: const EdgeInsets.fromLTRB(padding_16, 0, padding_16, padding_16),
+          margin:
+              const EdgeInsets.fromLTRB(padding_16, 0, padding_16, padding_16),
           child: SingleChildScrollView(
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,10 +42,8 @@ Widget NewsDescriptionPage(Article? article, BuildContext context) {
                       child: NewsDetail("$id${article?.source?.id ?? ""}",
                           Theme.of(context).textTheme.bodyText2, context)),
                   Center(
-                      child: NewsDetail(
-                          "$author${article?.author ?? ""}",
-                          Theme.of(context).textTheme.bodyText2,
-                          context)),
+                      child: NewsDetail("$author${article?.author ?? ""}",
+                          Theme.of(context).textTheme.bodyText2, context)),
                   Center(
                       child: NewsDetail(
                           "$published${article?.publishedAt ?? ""}",
@@ -60,7 +59,7 @@ Widget NewsDescriptionPage(Article? article, BuildContext context) {
 
 Widget NewsDetail(String text, TextStyle? textStyle, BuildContext context) {
   return Padding(
-    padding: EdgeInsets.all(padding_8),
+    padding: EdgeInsets.all(padding_16),
     child: Container(
         child: Text(
       text,

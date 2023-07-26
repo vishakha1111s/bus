@@ -37,8 +37,10 @@ class _NewsPageState extends State<NewsPage> {
       },
       builder: (BuildContext context, state) {
         if (state is NewsLoadingState) {
-          return Container(
-            child: CircularProgressIndicator(),
+          return Center(
+            child: Container(
+              child: CircularProgressIndicator(),
+            ),
           );
         } else if (state is NewsErrorState) {
           return Center(
