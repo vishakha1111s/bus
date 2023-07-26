@@ -1,4 +1,3 @@
-import 'package:untitled2/domain/entities/news_model.dart';
 
 class NewsResponse {
   String? status;

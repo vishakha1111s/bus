@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled2/domain/entities/news_model.dart';
+import 'package:untitled2/utils/constants.dart';
 
 Widget NewsDescriptionPage(Article? article, BuildContext context) {
   return Scaffold(
@@ -14,13 +15,13 @@ Widget NewsDescriptionPage(Article? article, BuildContext context) {
       ),
     ),
     body: Padding(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: padding_16),
       child: Center(
         child: Card(
-          elevation: 4,
+          elevation: padding_4,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
-          margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          margin: const EdgeInsets.fromLTRB(padding_16, 0, padding_16, padding_16),
           child: SingleChildScrollView(
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,19 +35,19 @@ Widget NewsDescriptionPage(Article? article, BuildContext context) {
                   NewsDetail("${article?.content ?? ""}",
                       Theme.of(context).textTheme.headline6, context),
                   Center(
-                      child: NewsDetail("Source ${article?.source?.name ?? ""}",
+                      child: NewsDetail("$source${article?.source?.name ?? ""}",
                           Theme.of(context).textTheme.bodyText2, context)),
                   Center(
-                      child: NewsDetail("Id is ${article?.source?.id ?? ""}",
+                      child: NewsDetail("$id${article?.source?.id ?? ""}",
                           Theme.of(context).textTheme.bodyText2, context)),
                   Center(
                       child: NewsDetail(
-                          "Author of the News - ${article?.author ?? ""}",
+                          "$author${article?.author ?? ""}",
                           Theme.of(context).textTheme.bodyText2,
                           context)),
                   Center(
                       child: NewsDetail(
-                          "PublishedAt ${article?.publishedAt ?? ""}",
+                          "$published${article?.publishedAt ?? ""}",
                           Theme.of(context).textTheme.bodyText2,
                           context)),
                 ]),
@@ -59,7 +60,7 @@ Widget NewsDescriptionPage(Article? article, BuildContext context) {
 
 Widget NewsDetail(String text, TextStyle? textStyle, BuildContext context) {
   return Padding(
-    padding: EdgeInsets.all(8.0),
+    padding: EdgeInsets.all(padding_8),
     child: Container(
         child: Text(
       text,

@@ -1,13 +1,10 @@
-import 'package:dio/dio.dart';
-import 'package:untitled2/data/mapper/news_mapper.dart';
 import 'package:untitled2/data/model/news_response.dart';
-import 'package:untitled2/domain/entities/news_model.dart';
+import 'package:untitled2/utils/constants.dart';
 import 'package:untitled2/utils/core.dart';
 
 
 class GetNewsDataSource {
-  var errorStr = "Something Went Wrong";
-
+  var errorStr = errorMsg;
   Future<NewsResponse> getNews() async {
     try {
       var response = await CoreApplication().dio.get("/v2/everything",
@@ -20,7 +17,7 @@ class GetNewsDataSource {
       AppLogger.log("News - Dio Error: $e");
       return NewsResponse.withError(errorStr);
     } on Error catch (e) {
-      AppLogger.log("TNews - Error: $e");
+      AppLogger.log("News - Error: $e");
       return NewsResponse.withError(errorStr);
     }
   }

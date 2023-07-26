@@ -7,6 +7,7 @@ import 'package:untitled2/presentation/bloc/news_event.dart';
 import 'package:untitled2/presentation/bloc/news_state.dart';
 import 'package:untitled2/presentation/widgets/news_description_page.dart';
 import 'package:untitled2/presentation/widgets/news_search_widget.dart';
+import 'package:untitled2/utils/constants.dart';
 
 class NewsPage extends StatefulWidget {
   const NewsPage({Key? key}) : super(key: key);
@@ -42,14 +43,14 @@ class _NewsPageState extends State<NewsPage> {
         } else if (state is NewsErrorState) {
           return Center(
               child: new Text(
-            state.error ?? "Error",
+            state.error ?? errorMsg,
             textAlign: TextAlign.start,
           ));
         } else if (state is NewsLoadCompleteState) {
           return Scaffold(
             appBar: AppBar(
               title: Text(
-                "Total ${state.newsModel?.totalResults ?? 0} News",
+                "$total ${state.newsModel?.totalResults ?? 0}$news",
               ),
               actions: [
                 IconButton(
