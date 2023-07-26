@@ -7,7 +7,7 @@ class GetNews {
 
   GetNews(this.repository);
 
-  Future<BaseResponse<NewsModel>> call(NewsModel newsModel) async {
-    return repository.fetchNews(newsModel);
+  Future<NewsModel> call() async {
+    return repository.fetchNews();
   }
 }

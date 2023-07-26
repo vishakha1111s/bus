@@ -19,6 +19,8 @@ class NewsLoadCompleteState extends NewsState {
 }
 
 class NewsErrorState extends NewsState {
+  String? error;
+  NewsErrorState({this.error});
   @override
   List<Object?> get props => [];
 }

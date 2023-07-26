@@ -1,12 +1,16 @@
+import 'package:untitled2/domain/entities/news_model.dart';
+
 class NewsResponse {
   String? status;
   int? totalResults;
   List<Article>? articles;
+  String? errors;
 
   NewsResponse({
     this.status,
     this.totalResults,
     this.articles,
+    this.errors
   });
 
   NewsResponse.fromJson(Map<String, dynamic> json) {
@@ -14,7 +18,10 @@ class NewsResponse {
     totalResults = json["totalResults"];
     articles =
         List<Article>.from(json["articles"].map((x) => Article.fromJson(x)));
+    errors = json["errors"];
   }
+  factory NewsResponse.withError(String error) =>
+      NewsResponse(errors: error);
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -34,7 +41,7 @@ class Article {
   String? description;
   String? url;
   String? urlToImage;
-  DateTime? publishedAt;
+  String? publishedAt;
   String? content;
 
   Article({
@@ -55,7 +62,7 @@ class Article {
     description = json["description"];
     url = json["url"];
     urlToImage = json["urlToImage"];
-    publishedAt = DateTime.parse(json["publishedAt"]);
+    publishedAt = json["publishedAt"];
     content = json["content"];
   }
 
@@ -67,7 +74,7 @@ class Article {
     data["description"] = description;
     data["url"] = url;
     data["urlToImage"] = urlToImage;
-    data["publishedAt"] = publishedAt?.toIso8601String();
+    data["publishedAt"] = publishedAt;
     data["content"] = content;
     return data;
   }

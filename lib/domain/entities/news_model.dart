@@ -17,7 +17,7 @@ class Article {
   String? description;
   String? url;
   String? urlToImage;
-  DateTime? publishedAt;
+  String? publishedAt;
   String? content;
 
   Article({

@@ -12,3 +12,8 @@ class LoadNewsEvent extends NewsEvent{
   @override
   List<Object> get props => []; //add props
 }
+class ErrorNewsEvent extends NewsEvent{
+
+  @override
+  List<Object> get props => []; //add props
+}
