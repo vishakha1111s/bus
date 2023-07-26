@@ -5,6 +5,7 @@ import 'package:untitled2/domain/usecases/get_news.dart';
 import 'package:untitled2/presentation/bloc/news_bloc.dart';
 import 'package:untitled2/presentation/bloc/news_event.dart';
 import 'package:untitled2/presentation/bloc/news_state.dart';
+import 'package:untitled2/presentation/widgets/news_description_page.dart';
 import 'package:untitled2/presentation/widgets/news_search_widget.dart';
 
 class NewsPage extends StatefulWidget {
@@ -47,8 +48,8 @@ class _NewsPageState extends State<NewsPage> {
         } else if (state is NewsLoadCompleteState) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text(
-                "News App",
+              title: Text(
+                "Total ${state.newsModel?.totalResults ?? 0} News",
               ),
               actions: [
                 IconButton(
@@ -65,14 +66,27 @@ class _NewsPageState extends State<NewsPage> {
               ],
             ),
             body: Container(
-              child: ListView.builder(
-                  itemCount: state.newsModel?.totalResults ?? 0,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                        leading: const Icon(Icons.list),
-                        title: Text(
-                            state.newsModel?.articles?[index].title ?? ""));
-                  }),
+              child: ListView.separated(
+                itemCount: state.newsModel?.totalResults ?? 0,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                      leading: const Icon(Icons.list),
+                      title: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NewsDescriptionPage(
+                                        state.newsModel?.articles?[index],
+                                        context)));
+                          },
+                          child: Text(
+                              state.newsModel?.articles?[index].title ?? "")));
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider();
+                },
+              ),
             ),
           );
         } else {

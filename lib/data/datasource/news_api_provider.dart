@@ -3,7 +3,7 @@ import 'package:untitled2/data/mapper/news_mapper.dart';
 import 'package:untitled2/data/model/news_response.dart';
 import 'package:untitled2/domain/entities/news_model.dart';
 import 'package:untitled2/utils/core.dart';
-import 'package:untitled2/utils/repo_response.dart';
+
 
 class GetNewsDataSource {
   var errorStr = "Something Went Wrong";
