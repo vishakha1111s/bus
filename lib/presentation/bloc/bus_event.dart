@@ -1,18 +1,18 @@
 import 'package:equatable/equatable.dart';
 
-abstract class NewsEvent extends Equatable {
+abstract class BusEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
 
-class LoadNewsEvent extends NewsEvent{
+class LoadBusEvent extends BusEvent{
 
-  LoadNewsEvent();
+  LoadBusEvent();
 
   @override
   List<Object> get props => []; //add props
 }
-class ErrorNewsEvent extends NewsEvent{
+class ErrorBusEvent extends BusEvent{
 
   @override
   List<Object> get props => []; //add props

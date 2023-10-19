@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:untitled2/presentation/news_page.dart';
+import 'package:untitled2/presentation/bus_page.dart';
+import 'package:untitled2/utils/constants.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,14 +18,16 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.purple,
           brightness: Brightness.light,
           primaryColor: Colors.purple,
-          accentColor: Colors.deepOrangeAccent,
-          fontFamily: 'Georgia', //text styling
-          textTheme: TextTheme(
-            headline1: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
-            headline6: TextStyle(fontSize: 20.0, fontStyle: FontStyle.normal),
-            bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+          fontFamily: 'Georgia',
+          //text styling
+          textTheme: const TextTheme(
+            displayLarge:
+                TextStyle(fontSize: font_20, fontWeight: FontWeight.bold),
+            displayMedium:
+                TextStyle(fontSize: font_16, fontStyle: FontStyle.normal),
+            displaySmall: TextStyle(fontSize: font_12, fontFamily: 'Hind'),
           )),
-      home: NewsPage(),
+      home: const BusPage(),
     );
   }
 }
